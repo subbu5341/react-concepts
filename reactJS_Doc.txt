@@ -1,0 +1,28 @@
+Project basic setUp: https://reactjs.org/docs/installation.html
+virtual-DOM: http://teropa.info/blog/2015/03/02/change-and-its-detection-in-javascript-frameworks.html
+DOM: https://auth0.com/blog/face-off-virtual-dom-vs-incremental-dom-vs-glimmer/
+
+Bootstrap SetUp: 
+
+Here's how I got React Bootstrap working at https://github.com/manavsehgal/react-eshop (Create React App scaffolded app).
+
+Step 1. Install React Bootstrap and Bootstrap from NPM.
+
+npm install react-bootstrap --save
+npm install bootstrap --save
+
+Step 2. Import Bootstrap CSS and optionally Bootstrap theme CSS in the index.js file.
+
+import './index.css';
+import 'bootstrap/dist/css/bootstrap.css';
+
+Step 3. Import required React Bootstrap components within App.js file or your custom component file.
+
+import React, { Component } from 'react';
+import { Navbar, Jumbotron, Button } from 'react-bootstrap';
+
+Now you are ready to use the imported React Bootstrap components within your component hierarchy defined in the render method. Here is an example App.js redone using React Bootstrap.
+
+Life Cycle methods:
+https://hackernoon.com/reactjs-component-lifecycle-methods-a-deep-dive-38275d9d13c0
+https://learn.co/lessons/react-component-mounting-and-unmounting
