@@ -12,18 +12,23 @@ class App extends Component {
       memberDetails: [],
       name: 'userDetails'
     };
-    this.updateProject = this.updateProjects.bind(this)
+    this.updateProject = this.updateProjects.bind(this);
+    this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
+    this.fetchWeather = this.fetchWeather.bind(this);
   }
   /*mounting Phase*/
   componentWillMount() {
     console.log('componentWillMount (ProjectList): pre component mount')
   }
-  componentDidMount() {
+  fetchWeather() {
     var that = this
     axios.get('https://jsonplaceholder.typicode.com/users')
     .then((response) => {
       that.setState({memberDetails: response.data})
     })
+  }
+  componentDidMount() {
+    this.interval = setInterval(this.fetchWeather, 15000);
     console.log('componentDidMount (ProjectList): post component mount')
   }
 
@@ -32,7 +37,7 @@ class App extends Component {
     console.log('shouldComponentUpdate (ProjectList):  Update props and state changes on conditional based ')
     console.log(this.state.name);
     console.log(nextState.name);
-    let shouldUpdate = this.state.name !== nextState.name;
+    let shouldUpdate = true
     return shouldUpdate;
   }
   componentWillUpdate() {
@@ -41,10 +46,11 @@ class App extends Component {
   componentDidUpdate() {
     console.log('componentDidUpdate(ProjectList):  Update anychanges post render')
   }
-  /*It calls only on Props changes case*/
-  componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps (ProjectList):  Update anychanges after render')
- }
+  /*Unmount Phase*/
+    componentWillUnmount() {
+      clearInterval(this.interval);
+      console.log('componentWillUnmount(projectList):  Before component removed from DOM')
+    }
   updateProjects(project) {
     let projects = this.state.memberDetails;
     project.id = this.state.memberDetails.length + 1;
@@ -61,7 +67,10 @@ class App extends Component {
     //console.log(this.props)
     this.props.history.push('/')
   }
-
+  //Force update example
+  forceUpdateHandler(){
+    this.forceUpdate();
+  };
 
   render() {
     let projectList;
@@ -77,7 +86,7 @@ class App extends Component {
                     <i className="fa fa-file-text" aria-hidden="true"></i>
                 </LinkWithTooltip>
               </span>
-              <strong>{index}: Name: { item.name } - email: {item.email} - website: { item.website}</strong>
+              <strong>{index}: <span>Name: { item.name } </span>- <span>email: {item.email} </span>-<span> website: { item.website}</span></strong>
               <button onClick= {this.deleteProject.bind(this, index)}>X</button>
             </li>
           </ul>
@@ -91,6 +100,8 @@ class App extends Component {
         <p style= {{textAlign: 'center'}}>
           {/*<Link to="/">Home</Link>*/}
           <button onClick={() => this.routeChange()}>Home</button>
+          <button onClick= {this.forceUpdateHandler} >FORCE UPDATE</button>
+          <span>Random Number : { Math.random() }</span>
 
         </p>
       </div>

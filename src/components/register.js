@@ -18,7 +18,7 @@ class Register extends Component {
     console.log('shouldComponentUpdate(Register):  Update props and state changes on conditional based ')
     console.log(this.props.name);
     console.log(nextProps.name);
-    let shouldUpdate = this.props.name !== nextProps.name;
+    let shouldUpdate = true;
     return shouldUpdate;
   }
   componentWillUpdate() {
@@ -34,7 +34,7 @@ class Register extends Component {
 
 /*Unmount Phase*/
   componentWillUnmount() {
-    console.log('componentWillUnmount:  Before component removed from DOM')
+    console.log('componentWillUnmount(Register):  Before component removed from DOM')
   }
   save() {
     if(this.refs.name.value === '') {
